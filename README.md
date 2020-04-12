@@ -384,7 +384,7 @@ print ("-" * 80)
 
     AssertionError                            Traceback (most recent call last)
 
-    <ipython-input-9-01cc34698b7e> in <module>
+    <ipython-input-7-01cc34698b7e> in <module>
          41             print("Your M: ")
          42             print(M_test)
     ---> 43             raise AssertionError("Incorrect count at index ({}, {})=({}, {}) in matrix M. Yours has {} but should have {}.".format(idx1, idx2, w1, w2, student, correct))
@@ -540,7 +540,7 @@ def load_word2vec():
 Loading word-vectors: Takes a few minutes, uncomment for selective run. 
 """
 
-#wv_from_bin = load_word2vec()
+wv_from_bin = load_word2vec()
 ```
 
     Loaded vocab size 3000000
@@ -615,6 +615,43 @@ plot_embeddings(M_reduced, word2Ind, words)
 ![png](word2vec_files/word2vec_24_0.png)
 
 
+### Plotting function: 
+
+
+```python
+def display_pca_scatterplot(model, words=None, sample=0):
+    if words == None:
+        if sample > 0:
+            words = np.random.choice(list(model.vocab.keys()), sample)
+        else:
+            words = [ word for word in model.vocab ]
+        
+    word_vectors = np.array([model[w] for w in words])
+
+    twodim = PCA().fit_transform(word_vectors)[:,:2]
+    
+    plt.figure(figsize=(16,16))
+    plt.scatter(twodim[:,0], twodim[:,1], edgecolors='k', c='r')
+    for word, (x,y) in zip(words, twodim):
+        plt.text(x+0.05, y+0.05, word)
+```
+
+
+```python
+display_pca_scatterplot(wv_from_bin, 
+                        ['coffee', 'tea', 'beer', 'wine', 'brandy', 'rum', 'champagne', 'water',
+                         'spaghetti', 'borscht', 'hamburger', 'pizza', 'falafel', 'sushi', 'meatballs',
+                         'dog', 'horse', 'cat', 'monkey', 'parrot', 'koala', 'lizard',
+                         'frog', 'toad', 'monkey', 'ape', 'kangaroo', 'wombat', 'wolf',
+                         'france', 'germany', 'hungary', 'australia', 'fiji', 'china',
+                         'homework', 'assignment', 'problem', 'exam', 'test', 'class',
+                         'school', 'college', 'university', 'institute'])
+```
+
+
+![png](word2vec_files/word2vec_27_0.png)
+
+
 ### Polysemous Words:
 
 Polysemous words are words have two different meanings. Such as "leaves" which can mean something similar to "go away" or the plural of "leaf". Looking for polysemous words in word2vec which capture both meaning.. 
@@ -672,12 +709,33 @@ The dimentions in the word vector have meaning and sometimes can be used to make
 
 ```python
 # Run this cell to answer the analogy -- man : king :: woman : x
-
-pprint.pprint(wv_from_bin.most_similar(positive=['king', 'woman'], negative=['man'], topn = 1))
+def analogy(x1, x2, y1):
+    pprint.pprint(wv_from_bin.most_similar(positive=[x2, y1], negative=[x1], topn = 1))
+    
+analogy("man", "king", "woman")
+analogy("japan", "japanese", "india")
+analogy("tall", "tallest", "long")
 ```
 
     [('queen', 0.7118192911148071)]
+    [('indian', 0.5673424005508423)]
+    [('longest', 0.5581464767456055)]
 
+
+### Finding the odd one out: 
+
+
+```python
+print(wv_from_bin.doesnt_match("football cricket tennis pancakes".split()))
+```
+
+    pancakes
+
+
+
+```python
+
+```
 
 ### Guided Analysis of Bias in Word Vectors
 
