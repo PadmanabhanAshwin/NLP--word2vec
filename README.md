@@ -1,4 +1,6 @@
-# Word Vectors: 
+# NLP using Word Vectors: 
+
+    ## Count and prediction based methods investigated to generate Word embedding. 
 
 **Thanks to Dr. Christopher Manning for the great content on NLP.**
 
@@ -468,7 +470,7 @@ def plot_embeddings(M_reduced, word2Ind, words):
             words (list of strings): words whose embeddings we want to visualize
     """    
     # simulating a pandas df['type'] column
-    plt.figure(figsize = (30,20))
+    plt.figure(figsize = (15,10))
     types = words
     x_coords = [M_reduced[word2Ind[words[i] ], 0] for i in range(len(words))]
     y_coords = [M_reduced[word2Ind[words[i] ], 1] for i in range(len(words))]
@@ -732,11 +734,6 @@ print(wv_from_bin.doesnt_match("football cricket tennis pancakes".split()))
     pancakes
 
 
-
-```python
-
-```
-
 ### Guided Analysis of Bias in Word Vectors
 
 Often the word corpus used have inherent biases. 
@@ -777,8 +774,3 @@ pprint.pprint(wv_from_bin.most_similar(positive=['man', 'boss'], negative=['woma
 In the above cell you see that "supremo" is the most likely word which is most similar to "man","boss" and most dissimilar to "woman". At the same time, "supremo" is ranked 9th when we look for words most similar to "woman" and "boss" and most dissimilar to "man". 
 
 These sources of bias occur from the training set itself, perhaps the authors of authors who created the articles. 
-
-
-```python
- 
-```
