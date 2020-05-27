@@ -773,4 +773,4 @@ pprint.pprint(wv_from_bin.most_similar(positive=['man', 'boss'], negative=['woma
 
 In the above cell you see that "supremo" is the most likely word which is most similar to "man","boss" and most dissimilar to "woman". At the same time, "supremo" is ranked 9th when we look for words most similar to "woman" and "boss" and most dissimilar to "man". 
 
-These sources of bias occur from the training set itself, perhaps the authors of authors who created the articles. 
+These sources of bias occur from the training set itself, perhaps from the authors who created the articles. 
